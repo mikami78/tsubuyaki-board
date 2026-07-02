@@ -55,18 +55,21 @@
 
     <section class="reply-form">
         <h2>返信を書く</h2>
-        <form th:action="@{/posts/{id}/replies(id=${postId})}" th:object="${replyForm}" method="post">
-            <div>
+        <form class="entry-form entry-form--compact"
+              th:action="@{/posts/{id}/replies(id=${postId})}"
+              th:object="${replyForm}"
+              method="post">
+            <div class="form-field">
                 <label for="replyAuthor">名前</label>
                 <input type="text" id="replyAuthor" th:field="*{author}" maxlength="30" required>
                 <p class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">エラー</p>
             </div>
-            <div>
-                <label for="replyBody">本文</label>
+            <div class="form-field">
+                <label for="replyBody">本文 <span>280文字まで</span></label>
                 <textarea id="replyBody" th:field="*{body}" maxlength="280" rows="4" required></textarea>
                 <p class="error" th:if="${#fields.hasErrors('body')}" th:errors="*{body}">エラー</p>
             </div>
-            <div>
+            <div class="form-field">
                 <label for="replyAvatarColor">色</label>
                 <select id="replyAvatarColor" th:field="*{avatarColor}">
                     <option value="">未選択 (グレー)</option>
@@ -78,7 +81,9 @@
                 </select>
                 <p class="error" th:if="${#fields.hasErrors('avatarColor')}" th:errors="*{avatarColor}">エラー</p>
             </div>
-            <button type="submit">返信する</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">返信する</button>
+            </div>
         </form>
     </section>
 </main>

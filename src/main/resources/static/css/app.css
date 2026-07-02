@@ -1,10 +1,12 @@
 /* 最小スタイル — 受講生が必要に応じて拡張する */
 :root {
-    --color-bg: #fafafa;
+    --color-bg: #eef8ff;
     --color-text: #222;
-    --color-accent: #1d4ed8;
-    --color-border: #e5e7eb;
-    --color-muted: #6b7280;
+    --color-accent: #5b6ee1;
+    --color-border: rgba(113, 118, 150, 0.18);
+    --color-muted: #687084;
+    --color-surface: rgba(255, 255, 255, 0.9);
+    --shadow-card: 0 14px 36px rgba(49, 57, 90, 0.12), 0 1px 2px rgba(49, 57, 90, 0.08);
 }
 
 * {
@@ -13,22 +15,123 @@
 
 body {
     margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
                  "Noto Sans CJK JP", "Yu Gothic UI", sans-serif;
-    background: var(--color-bg);
+    background:
+        radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.95) 0 5rem, rgba(255, 245, 201, 0.58) 5.2rem, transparent 8rem),
+        radial-gradient(circle at 83% 20%, rgba(191, 224, 255, 0.72) 0 9rem, transparent 9.5rem),
+        radial-gradient(circle at 15% 74%, rgba(185, 231, 197, 0.72) 0 12rem, transparent 12.8rem),
+        radial-gradient(circle at 86% 82%, rgba(224, 206, 255, 0.72) 0 13rem, transparent 13.8rem),
+        linear-gradient(
+            180deg,
+            #dff3ff 0%,
+            #f8fcff 42%,
+            #f7f0ff 68%,
+            #e7f8eb 100%
+        ),
+        var(--color-bg);
+    background-size: auto;
+    background-attachment: fixed;
+    animation: sky-breath 18s ease-in-out infinite alternate;
     color: var(--color-text);
     line-height: 1.6;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+body::before {
+    z-index: -2;
+    background:
+        linear-gradient(135deg, transparent 0 57%, rgba(151, 185, 219, 0.46) 57.2% 66%, transparent 66.2%) 0 16rem / 36rem 18rem repeat-x,
+        linear-gradient(225deg, transparent 0 54%, rgba(121, 159, 199, 0.38) 54.2% 64%, transparent 64.2%) 8rem 17rem / 34rem 17rem repeat-x,
+        linear-gradient(135deg, transparent 0 58%, rgba(255, 255, 255, 0.8) 58.2% 62%, transparent 62.2%) 2rem 17rem / 36rem 18rem repeat-x,
+        repeating-linear-gradient(168deg, rgba(126, 87, 194, 0.32) 0 0.55rem, rgba(255, 255, 255, 0.3) 0.55rem 1.1rem, transparent 1.1rem 2.2rem) 0 65vh / 100% 35vh no-repeat,
+        linear-gradient(180deg, transparent 0 58%, rgba(151, 204, 153, 0.24) 58% 100%);
+    animation: landscape-drift 28s ease-in-out infinite alternate;
+}
+
+body::after {
+    z-index: -1;
+    background:
+        radial-gradient(circle at 12% 24%, rgba(255, 255, 255, 0.88) 0 0.12rem, transparent 0.16rem),
+        radial-gradient(circle at 34% 18%, rgba(255, 255, 255, 0.78) 0 0.1rem, transparent 0.14rem),
+        radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.82) 0 0.12rem, transparent 0.16rem),
+        radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.72) 0 0.1rem, transparent 0.14rem);
+    background-size: 18rem 14rem, 22rem 18rem, 20rem 16rem, 24rem 18rem;
+    animation: snow-sparkle 16s linear infinite;
+}
+
+@keyframes sky-breath {
+    from {
+        background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+    to {
+        background-position: 1.2rem -0.8rem, -1rem 0.7rem, 0.8rem 1rem, -0.8rem -0.6rem, 0 0, 0 0;
+    }
+}
+
+@keyframes landscape-drift {
+    from {
+        transform: translate3d(-0.8rem, 0, 0);
+    }
+    to {
+        transform: translate3d(0.8rem, -0.4rem, 0);
+    }
+}
+
+@keyframes snow-sparkle {
+    from {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.95;
+    }
+    to {
+        background-position: 2rem 3rem, -2rem 2rem, 1.5rem -2.5rem, -1.5rem 2.5rem;
+        opacity: 0.62;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    body::before,
+    body::after {
+        animation: none;
+    }
 }
 
 main {
     max-width: 720px;
     margin: 2rem auto;
     padding: 0 1rem;
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
-    font-size: 1.5rem;
+    display: inline-block;
+    font-size: 1.6rem;
     margin-bottom: 1rem;
+    padding: 0.25rem 0.1rem;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+nav {
+    margin-bottom: 1.25rem;
+}
+
+nav a {
+    color: #4052bd;
+    font-weight: 600;
 }
 
 .toolbar {
@@ -40,7 +143,7 @@ h1 {
     padding: 0.4rem 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    background: white;
+    background: var(--color-surface);
     color: var(--color-text);
     cursor: pointer;
 }
@@ -57,7 +160,9 @@ h1 {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     margin-bottom: 0.75rem;
-    background: white;
+    background: var(--color-surface);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-card);
     position: relative;
 }
 
@@ -67,6 +172,7 @@ h1 {
 
 .post--clickable:hover {
     border-color: var(--color-accent);
+    box-shadow: 0 18px 42px rgba(77, 91, 142, 0.16), 0 1px 2px rgba(77, 91, 142, 0.1);
 }
 
 .post__link,
@@ -143,4 +249,91 @@ h1 {
 .tag-link {
     position: relative;
     z-index: 2;
+}
+
+.entry-form {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-card);
+}
+
+.entry-form--compact {
+    margin-top: 0.75rem;
+}
+
+.form-field {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.form-field label {
+    font-weight: 600;
+}
+
+.form-field label span {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-text);
+    font: inherit;
+}
+
+.form-field textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.entry-form--compact .form-field textarea {
+    min-height: 6.5rem;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+    border-color: #6b7280;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.16);
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.primary-button {
+    min-width: 6.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background: #2f343b;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.primary-button:hover {
+    background: #111827;
+}
+
+.error {
+    margin: 0;
+    color: #b91c1c;
+    font-size: 0.9rem;
 }
